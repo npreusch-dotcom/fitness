@@ -1,68 +1,14 @@
-"use strict";
+# Momentum Coach 2.0.1 — Repair Build
 
-const CACHE_NAME = "momentum-coach-v2.0.0";
-const APP_SHELL = [
-  "./",
-  "./index.html",
-  "./styles.css",
-  "./app.js",
-  "./manifest.webmanifest",
-  "./icons/favicon.svg",
-  "./icons/apple-touch-icon.png",
-  "./icons/icon-192.png",
-  "./icons/icon-512.png",
-  "./icons/icon-maskable-512.png"
-];
+This deployment-safe build places the complete interface and application logic inside `index.html`.
+That prevents a missing, stale, or separately cached `app.js`/`styles.css` file from producing a blank Home Screen app.
 
-self.addEventListener("install", (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then((cache) => cache.addAll(APP_SHELL))
-      .then(() => self.skipWaiting())
-  );
-});
+## Upload
 
-self.addEventListener("activate", (event) => {
-  event.waitUntil(
-    caches.keys()
-      .then((keys) => Promise.all(keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))))
-      .then(() => self.clients.claim())
-  );
-});
+1. Extract the ZIP.
+2. Upload all extracted files and the `icons` folder to the root of the existing GitHub repository.
+3. Commit the changes and wait for GitHub Pages to redeploy.
+4. Open the Pages URL in Safari and refresh once.
+5. Fully close the Home Screen copy of Momentum and reopen it.
 
-self.addEventListener("fetch", (event) => {
-  const request = event.request;
-  if (request.method !== "GET") return;
-  const url = new URL(request.url);
-  if (url.origin !== self.location.origin) return;
-
-  if (request.mode === "navigate") {
-    event.respondWith(
-      fetch(request)
-        .then((response) => {
-          const copy = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
-          return response;
-        })
-        .catch(async () => {
-          return (await caches.match(request)) || (await caches.match(new URL("./index.html", self.location.href).href));
-        })
-    );
-    return;
-  }
-
-  event.respondWith(
-    caches.match(request).then((cached) => {
-      const network = fetch(request)
-        .then((response) => {
-          if (response && response.ok) {
-            const copy = response.clone();
-            caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
-          }
-          return response;
-        })
-        .catch(() => cached);
-      return cached || network;
-    })
-  );
-});
+Existing workout and nutrition records are preserved because the browser storage key is unchanged.
