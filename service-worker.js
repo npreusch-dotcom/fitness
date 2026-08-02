@@ -1,16 +1,55 @@
-# Momentum Coach 3.0
+"use strict";
 
-An offline-first iPhone Progressive Web App hosted on GitHub Pages.
+const CACHE_NAME = "momentum-coach-v3.0.0-inline";
+const CORE_FILES = [
+  "./",
+  "./index.html",
+  "./manifest.webmanifest",
+  "./icons/favicon.svg",
+  "./icons/apple-touch-icon.png",
+  "./icons/icon-192.png",
+  "./icons/icon-512.png",
+  "./icons/icon-maskable-512.png"
+];
 
-## New in 3.0
+self.addEventListener("install", (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then((cache) => cache.addAll(CORE_FILES))
+      .then(() => self.skipWaiting())
+  );
+});
 
-- Habits grouped into Meals, Workouts, Other Healthy Habits, and Pills
-- Skip any Next Move for the day without reducing the daily score
-- Weekly weight and body-fat check-in instead of a daily weigh-in
-- 40 oz Owala water logging
-- Editable walking, reading, medication, and custom habits
-- 10-week strength cycles
-- Copy a structured ChatGPT prompt and import the returned JSON
-- No WHOOP integration, embedded AI, account, analytics, or server database
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    caches.keys()
+      .then((keys) => Promise.all(keys
+        .filter((key) => key.startsWith("momentum-coach") && key !== CACHE_NAME)
+        .map((key) => caches.delete(key))))
+      .then(() => self.clients.claim())
+  );
+});
 
-All personal entries are stored in the browser on the device. Use the in-app backup feature regularly.
+self.addEventListener("fetch", (event) => {
+  const request = event.request;
+  if (request.method !== "GET") return;
+  const url = new URL(request.url);
+  if (url.origin !== self.location.origin) return;
+
+  event.respondWith(
+    fetch(request)
+      .then((response) => {
+        if (response && response.ok) {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
+        }
+        return response;
+      })
+      .catch(async () => {
+        const cached = await caches.match(request);
+        if (cached) return cached;
+        if (request.mode === "navigate") return caches.match(new URL("./index.html", self.location.href).href);
+        throw new Error("Offline resource unavailable");
+      })
+  );
+});
