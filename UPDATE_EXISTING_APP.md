@@ -1,17 +1,55 @@
-# Update the Existing Momentum App
+"use strict";
 
-1. Open the existing app and use **Coach > App and plan settings > Back up all data**. Save the JSON file to iCloud Drive.
-2. Download and unzip the Momentum Coach 3.0 upload.
-3. Open the same GitHub repository that currently hosts Momentum.
-4. Select **Add file > Upload files**.
-5. Upload every item inside the unzipped folder. Allow GitHub to replace matching files.
-6. Commit the upload.
-7. Wait for the Pages deployment to complete.
-8. In Safari, open your normal Pages address with `?v=300` appended once. Example: `https://USERNAME.github.io/REPOSITORY/?v=300`.
-9. Fully close Momentum from the iPhone app switcher and reopen it from the Home Screen.
+const CACHE_NAME = "momentum-coach-v3.1.0-inline";
+const CORE_FILES = [
+  "./",
+  "./index.html",
+  "./manifest.webmanifest",
+  "./icons/favicon.svg",
+  "./icons/apple-touch-icon.png",
+  "./icons/icon-192.png",
+  "./icons/icon-512.png",
+  "./icons/icon-maskable-512.png"
+];
 
-If the old screen remains, remove only the Home Screen icon and add the site to the Home Screen again. Removing the icon normally does not clear Safari website data, but the backup protects you if browser storage is lost.
+self.addEventListener("install", (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then((cache) => cache.addAll(CORE_FILES))
+      .then(() => self.skipWaiting())
+  );
+});
 
-## Data migration
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    caches.keys()
+      .then((keys) => Promise.all(keys
+        .filter((key) => key.startsWith("momentum-coach") && key !== CACHE_NAME)
+        .map((key) => caches.delete(key))))
+      .then(() => self.clients.claim())
+  );
+});
 
-The update keeps the same browser storage key. Existing workout history, weight, meals, settings, and progress should remain. New fields for body fat, skipped tasks, custom habits, and 10-week programs are added automatically.
+self.addEventListener("fetch", (event) => {
+  const request = event.request;
+  if (request.method !== "GET") return;
+  const url = new URL(request.url);
+  if (url.origin !== self.location.origin) return;
+
+  event.respondWith(
+    fetch(request)
+      .then((response) => {
+        if (response && response.ok) {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
+        }
+        return response;
+      })
+      .catch(async () => {
+        const cached = await caches.match(request);
+        if (cached) return cached;
+        if (request.mode === "navigate") return caches.match(new URL("./index.html", self.location.href).href);
+        throw new Error("Offline resource unavailable");
+      })
+  );
+});

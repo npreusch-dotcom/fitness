@@ -1,55 +1,19 @@
-"use strict";
+# Momentum Coach 3.1
 
-const CACHE_NAME = "momentum-coach-v3.0.0-inline";
-const CORE_FILES = [
-  "./",
-  "./index.html",
-  "./manifest.webmanifest",
-  "./icons/favicon.svg",
-  "./icons/apple-touch-icon.png",
-  "./icons/icon-192.png",
-  "./icons/icon-512.png",
-  "./icons/icon-maskable-512.png"
-];
+An offline-first iPhone Progressive Web App hosted on GitHub Pages.
 
-self.addEventListener("install", (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then((cache) => cache.addAll(CORE_FILES))
-      .then(() => self.skipWaiting())
-  );
-});
+## New in 3.1
 
-self.addEventListener("activate", (event) => {
-  event.waitUntil(
-    caches.keys()
-      .then((keys) => Promise.all(keys
-        .filter((key) => key.startsWith("momentum-coach") && key !== CACHE_NAME)
-        .map((key) => caches.delete(key))))
-      .then(() => self.clients.claim())
-  );
-});
+- Keeps the five-meal structure
+- Tapping a meal now opens a protein entry form
+- Each meal records the actual grams of protein eaten, not merely the planned estimate
+- Completed meal protein can be edited or the meal can be reopened
+- Strength days are now all-day exercise and set checklists
+- Every set saves immediately, so one set can be completed now and the next one hours later
+- Strength workouts have no elapsed clock or rest timer
+- Today shows each strength exercise separately with set progress
+- ChatGPT's 10-week program prompt now requests independent exercises suitable for micro-sessions across the day
 
-self.addEventListener("fetch", (event) => {
-  const request = event.request;
-  if (request.method !== "GET") return;
-  const url = new URL(request.url);
-  if (url.origin !== self.location.origin) return;
+Momentum still includes weekly weight and body-fat tracking, 40 oz Owala logging, editable habits and pills, cardio programming, skip-for-today controls, backups, and JSON workout-program imports.
 
-  event.respondWith(
-    fetch(request)
-      .then((response) => {
-        if (response && response.ok) {
-          const copy = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
-        }
-        return response;
-      })
-      .catch(async () => {
-        const cached = await caches.match(request);
-        if (cached) return cached;
-        if (request.mode === "navigate") return caches.match(new URL("./index.html", self.location.href).href);
-        throw new Error("Offline resource unavailable");
-      })
-  );
-});
+All personal entries remain in the browser on the device. Use the in-app backup feature regularly.

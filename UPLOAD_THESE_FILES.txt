@@ -1,14 +1,19 @@
-MOMENTUM COACH 3.0 - GITHUB UPDATE
+# Update the Existing Momentum App to 3.1
 
-1. Open the Momentum app currently on your iPhone.
-2. In Coach > App and plan settings, create a backup first.
-3. Open the SAME GitHub repository currently hosting Momentum.
-4. Choose Add file > Upload files.
-5. Upload EVERYTHING in this folder, including the icons folder and .nojekyll.
-6. Replace the existing files and commit the changes.
-7. Wait for GitHub Pages to finish deploying.
-8. Open your GitHub Pages address in Safari with ?v=300 at the end once.
-9. Fully close the Home Screen app and reopen it.
+1. Open Momentum and use **Coach > App and plan settings > Back up all data**. Save the JSON file to iCloud Drive.
+2. Download and unzip the Momentum Coach 3.1 upload.
+3. Open the same GitHub repository that currently hosts Momentum.
+4. Select **Add file > Upload files**.
+5. Upload every item inside the unzipped folder, including the `icons` folder and `.nojekyll` file. Allow GitHub to replace matching files.
+6. Commit the upload.
+7. Wait for the GitHub Pages deployment to complete.
+8. In Safari, open the normal Pages address with `?v=310` appended once. Example: `https://USERNAME.github.io/REPOSITORY/?v=310`.
+9. Fully close Momentum from the iPhone app switcher and reopen it from the Home Screen.
 
-Keep index.html at the repository root. Do not upload the outer folder itself.
-Your existing local entries use the same storage key and should migrate automatically.
+If the prior version remains cached, refresh the Safari page once. If necessary, remove only the Momentum Home Screen icon and add the refreshed page to the Home Screen again.
+
+## Data migration
+
+The update keeps the same browser storage key. Existing weight, body-fat, water, meals, habits, workout history, and settings remain. Previously completed meals that did not store an actual protein value continue using their old planned estimate until edited.
+
+An unfinished strength workout remains resumable. In 3.1, its sets appear as individual all-day tasks and continue saving one set at a time.
