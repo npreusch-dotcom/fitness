@@ -1,54 +1,55 @@
-# Update the Momentum App Already on the iPhone
+"use strict";
 
-## 1. Create a safety backup
+const CACHE_NAME = "momentum-coach-v3.0.0-inline";
+const CORE_FILES = [
+  "./",
+  "./index.html",
+  "./manifest.webmanifest",
+  "./icons/favicon.svg",
+  "./icons/apple-touch-icon.png",
+  "./icons/icon-192.png",
+  "./icons/icon-512.png",
+  "./icons/icon-maskable-512.png"
+];
 
-In the current app:
+self.addEventListener("install", (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then((cache) => cache.addAll(CORE_FILES))
+      .then(() => self.skipWaiting())
+  );
+});
 
-```text
-Coach > App and plan settings > Back up all data
-```
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    caches.keys()
+      .then((keys) => Promise.all(keys
+        .filter((key) => key.startsWith("momentum-coach") && key !== CACHE_NAME)
+        .map((key) => caches.delete(key))))
+      .then(() => self.clients.claim())
+  );
+});
 
-Save the JSON file to iCloud Drive.
+self.addEventListener("fetch", (event) => {
+  const request = event.request;
+  if (request.method !== "GET") return;
+  const url = new URL(request.url);
+  if (url.origin !== self.location.origin) return;
 
-## 2. Replace the GitHub files
-
-1. Download and unzip `momentum-coach-github-upload.zip`.
-2. Open the same GitHub repository currently hosting Momentum.
-3. Select **Add file > Upload files**.
-4. Upload everything inside the unzipped `momentum-coach` folder, including `icons`.
-5. Permit GitHub to replace matching files.
-6. Commit with a message such as:
-
-```text
-Upgrade Momentum to version 2.0
-```
-
-Keep the same repository, username, and Pages address. The local app data is linked to that exact website address.
-
-## 3. Load the update
-
-1. Wait for the GitHub Pages deployment to finish.
-2. Fully close Momentum from the iPhone app switcher.
-3. Reopen it from the Home Screen.
-4. When an update notice appears, close and reopen once more.
-5. If the old interface remains, open the Pages address in Safari, refresh once, and reopen the Home Screen app.
-
-Do not clear Safari website data unless a current backup exists.
-
-## 4. Confirm version 2.0
-
-The bottom navigation should be:
-
-```text
-Today | Train | Progress | Coach
-```
-
-The floating **+** button should open quick logging.
-
-Open **Train** and confirm the eight-week strength and cardio program. Open **Coach** and confirm the food system, meal swaps, daily adjustments, weekly plan, reminders, and settings.
-
-## Existing data
-
-Momentum continues using the storage key from the earlier build. It preserves compatible historical logs, workout history, weight entries, reminders settings, and meal completion data. Old `#meals` and `#settings` links automatically redirect to the new Coach tab.
-
-An unfinished workout remains resumable when its program template is compatible. The JSON backup can restore the earlier data if Safari storage is ever lost.
+  event.respondWith(
+    fetch(request)
+      .then((response) => {
+        if (response && response.ok) {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
+        }
+        return response;
+      })
+      .catch(async () => {
+        const cached = await caches.match(request);
+        if (cached) return cached;
+        if (request.mode === "navigate") return caches.match(new URL("./index.html", self.location.href).href);
+        throw new Error("Offline resource unavailable");
+      })
+  );
+});

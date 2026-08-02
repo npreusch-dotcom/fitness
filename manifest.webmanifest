@@ -1,18 +1,19 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
-  <meta name="theme-color" content="#111827">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Momentum">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="description" content="A private, offline-first fat-loss, strength, cardio, meal schedule, and habit coach.">
-  <link rel="manifest" href="manifest.webmanifest?v=2.0.1">
-  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-  <link rel="icon" href="icons/favicon.svg" type="image/svg+xml">
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" name="viewport"/>
+<meta content="#111827" name="theme-color"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Momentum" name="apple-mobile-web-app-title"/>
+<meta content="telephone=no" name="format-detection"/>
+<meta content="A private, offline-first fat-loss, strength, cardio, meal schedule, and habit coach." name="description"/>
+<link href="manifest.webmanifest?v=3.0.0" rel="manifest"/>
+<link href="icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<link href="icons/favicon.svg" rel="icon" type="image/svg+xml"/>
+<style>
 :root {
   color-scheme: light dark;
   --bg: #f3f6fb;
@@ -4126,94 +4127,291 @@ body {
   });
 })();
 </script>
-  <title>Momentum Coach</title>
+<title>Momentum Coach</title>
+<style id="momentum-v3-styles">
+/* Momentum 3.0 habit and 10-week cycle update */
+.habit-category-card {
+  overflow: hidden;
+  border-radius: 22px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+.habit-category-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 17px 18px 12px;
+}
+.habit-category-head h3,
+.habit-category-head p { margin: 0; }
+.habit-category-head h3 { font-size: 1.02rem; }
+.habit-category-head p { margin-top: 3px; color: var(--text-soft); font-size: .82rem; }
+.habit-category-count {
+  flex: 0 0 auto;
+  min-width: 52px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  text-align: center;
+  background: var(--surface-soft);
+  color: var(--text-soft);
+  font-size: .76rem;
+  font-weight: 800;
+}
+.habit-list { border-top: 1px solid var(--border); }
+.habit-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 8px;
+  min-height: 70px;
+  padding: 9px 11px 9px 15px;
+  border-bottom: 1px solid var(--border);
+}
+.habit-row:last-child { border-bottom: 0; }
+.habit-row.done { background: color-mix(in srgb, var(--success) 6%, transparent); }
+.habit-row.skipped { opacity: .62; }
+.habit-main {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr);
+  align-items: center;
+  gap: 11px;
+  border: 0;
+  background: none;
+  padding: 0;
+  text-align: left;
+  color: inherit;
+}
+.habit-row-icon {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 13px;
+  background: var(--surface-soft);
+  color: var(--primary);
+}
+.habit-row-icon .icon { width: 19px; height: 19px; }
+.habit-copy { min-width: 0; }
+.habit-copy strong,
+.habit-copy span { display: block; }
+.habit-copy strong { font-size: .94rem; line-height: 1.2; }
+.habit-copy span {
+  margin-top: 4px;
+  color: var(--text-soft);
+  font-size: .77rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.habit-skip,
+.habit-complete {
+  border: 0;
+  display: grid;
+  place-items: center;
+  height: 36px;
+  border-radius: 12px;
+  font-weight: 800;
+}
+.habit-skip {
+  padding: 0 9px;
+  background: transparent;
+  color: var(--text-soft);
+  font-size: .71rem;
+}
+.habit-complete {
+  width: 36px;
+  background: var(--surface-soft);
+  color: var(--text-soft);
+}
+.habit-complete.done { background: var(--success); color: white; }
+.habit-complete .icon { width: 18px; height: 18px; }
+.dashboard-hero .skip-next-button { min-width: 92px; }
+.water-bottle-line {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  margin-top: 9px;
+}
+.water-bottle-line strong { font-size: 1.75rem; }
+.water-bottle-line span { color: var(--text-soft); font-size: .82rem; }
+.program-studio-card {
+  padding: 18px;
+  border-radius: 22px;
+  background: linear-gradient(145deg, color-mix(in srgb, var(--primary) 12%, var(--card)), var(--card));
+  border: 1px solid color-mix(in srgb, var(--primary) 22%, var(--border));
+  box-shadow: var(--shadow-sm);
+}
+.program-studio-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+.program-studio-card h2,
+.program-studio-card p { margin: 0; }
+.program-studio-card h2 { margin-top: 7px; font-size: 1.25rem; }
+.program-studio-card p { margin-top: 6px; color: var(--text-soft); font-size: .86rem; line-height: 1.45; }
+.program-cycle-badge {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  min-width: 68px;
+  min-height: 68px;
+  border-radius: 22px;
+  background: var(--primary);
+  color: white;
+  font-weight: 900;
+  font-size: 1.25rem;
+}
+.program-cycle-badge small { display: block; font-size: .6rem; opacity: .8; }
+.program-studio-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9px;
+  margin-top: 15px;
+}
+.program-studio-actions button { min-width: 0; }
+.body-metrics-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.body-metric-card {
+  padding: 15px;
+  border-radius: 17px;
+  background: var(--surface-soft);
+}
+.body-metric-card small,
+.body-metric-card strong,
+.body-metric-card span { display: block; }
+.body-metric-card small { color: var(--text-soft); font-weight: 800; font-size: .67rem; letter-spacing: .05em; }
+.body-metric-card strong { margin-top: 6px; font-size: 1.42rem; }
+.body-metric-card span { margin-top: 3px; color: var(--text-soft); font-size: .75rem; }
+.habit-editor-row {
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 17px;
+  background: var(--card);
+  margin-bottom: 11px;
+}
+.habit-editor-row .habit-editor-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 42px;
+  gap: 8px;
+  align-items: end;
+}
+.weekday-checks {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+  margin-top: 9px;
+}
+.weekday-checks label { position: relative; }
+.weekday-checks input { position: absolute; opacity: 0; pointer-events: none; }
+.weekday-checks span {
+  display: grid;
+  place-items: center;
+  min-height: 34px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text-soft);
+  font-size: .68rem;
+  font-weight: 800;
+}
+.weekday-checks input:checked + span {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+  color: var(--primary);
+}
+.program-json-area { min-height: 280px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .75rem; }
+.program-format-note { font-size: .78rem; line-height: 1.5; }
+@media (max-width: 380px) {
+  .program-studio-actions { grid-template-columns: 1fr; }
+  .habit-row { grid-template-columns: minmax(0,1fr) auto; }
+  .habit-skip { grid-column: 1 / -1; justify-self: end; height: 25px; }
+}
+
+</style>
 </head>
 <body>
-  <noscript>
-    <div class="noscript">Momentum Coach needs JavaScript enabled.</div>
-  </noscript>
-
-  <div id="app" class="app-shell">
-    <div id="installBanner" class="install-banner hidden" role="status">
-      <div>
-        <strong>Put Momentum on your Home Screen</strong>
-        <span>It opens full screen and works offline.</span>
-      </div>
-      <button class="button button-small button-light" type="button" data-action="show-install">How</button>
-      <button class="icon-button" type="button" aria-label="Dismiss" data-action="dismiss-install">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-
-    <header class="topbar">
-      <div class="topbar-copy">
-        <p id="eyebrow" class="eyebrow">TODAY</p>
-        <h1 id="pageTitle">Momentum</h1>
-      </div>
-      <div class="topbar-actions">
-        <button id="offlineIndicator" class="status-pill hidden" type="button" title="Momentum is offline">
+<noscript>
+<div class="noscript">Momentum Coach needs JavaScript enabled.</div>
+</noscript>
+<div class="app-shell" id="app">
+<div class="install-banner hidden" id="installBanner" role="status">
+<div>
+<strong>Put Momentum on your Home Screen</strong>
+<span>It opens full screen and works offline.</span>
+</div>
+<button class="button button-small button-light" data-action="show-install" type="button">How</button>
+<button aria-label="Dismiss" class="icon-button" data-action="dismiss-install" type="button">
+<span aria-hidden="true">×</span>
+</button>
+</div>
+<header class="topbar">
+<div class="topbar-copy">
+<p class="eyebrow" id="eyebrow">TODAY</p>
+<h1 id="pageTitle">Momentum</h1>
+</div>
+<div class="topbar-actions">
+<button class="status-pill hidden" id="offlineIndicator" title="Momentum is offline" type="button">
           Offline
         </button>
-        <button class="avatar-button" type="button" data-nav="coach" aria-label="Open Coach">
-          <span id="avatarInitial">N</span>
-        </button>
-      </div>
-    </header>
-
-    <main id="mainContent" class="main-content" tabindex="-1">
-      <section id="view-today" class="view active" data-view="today" aria-labelledby="todayHeading">
-        <h2 id="todayHeading" class="sr-only">Today</h2>
-        <div id="todayContent"><div class="boot-loading-card" role="status"><div class="boot-pulse" aria-hidden="true"></div><p class="eyebrow">LOADING YOUR PLAN</p><h2>Getting Momentum ready…</h2><p>Your workouts, meals, progress, and coach are loading on this device.</p></div></div>
-      </section>
-
-      <section id="view-workout" class="view" data-view="workout" aria-labelledby="workoutHeading">
-        <h2 id="workoutHeading" class="sr-only">Train</h2>
-        <div id="workoutContent"></div>
-      </section>
-
-      <section id="view-progress" class="view" data-view="progress" aria-labelledby="progressHeading">
-        <h2 id="progressHeading" class="sr-only">Progress</h2>
-        <div id="progressContent"></div>
-      </section>
-
-      <section id="view-coach" class="view" data-view="coach" aria-labelledby="coachHeading">
-        <h2 id="coachHeading" class="sr-only">Coach</h2>
-        <div id="coachContent"></div>
-      </section>
-    </main>
-
-    <button id="quickLogButton" class="quick-log-fab" type="button" data-action="show-quick-log" aria-label="Quick log">
-      <span aria-hidden="true">+</span>
-    </button>
-
-    <nav class="bottom-nav" aria-label="Primary navigation">
-      <button class="nav-item active" type="button" data-nav="today" aria-current="page">
-        <span class="nav-icon" data-icon="home"></span>
-        <span>Today</span>
-      </button>
-      <button class="nav-item" type="button" data-nav="workout">
-        <span class="nav-icon" data-icon="dumbbell"></span>
-        <span>Train</span>
-      </button>
-      <button class="nav-item" type="button" data-nav="progress">
-        <span class="nav-icon" data-icon="chart"></span>
-        <span>Progress</span>
-      </button>
-      <button class="nav-item" type="button" data-nav="coach">
-        <span class="nav-icon" data-icon="spark"></span>
-        <span>Coach</span>
-      </button>
-    </nav>
-  </div>
-
-  <div id="modalRoot" class="modal-root" aria-live="polite"></div>
-  <div id="toast" class="toast" role="status" aria-live="polite"></div>
-
-  <template id="iconTemplate">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
-  </template>
-
-  <script>
+<button aria-label="Open Coach" class="avatar-button" data-nav="coach" type="button">
+<span id="avatarInitial">N</span>
+</button>
+</div>
+</header>
+<main class="main-content" id="mainContent" tabindex="-1">
+<section aria-labelledby="todayHeading" class="view active" data-view="today" id="view-today">
+<h2 class="sr-only" id="todayHeading">Today</h2>
+<div id="todayContent"><div class="boot-loading-card" role="status"><div aria-hidden="true" class="boot-pulse"></div><p class="eyebrow">LOADING YOUR PLAN</p><h2>Getting Momentum ready…</h2><p>Your workouts, meals, progress, and coach are loading on this device.</p></div></div>
+</section>
+<section aria-labelledby="workoutHeading" class="view" data-view="workout" id="view-workout">
+<h2 class="sr-only" id="workoutHeading">Train</h2>
+<div id="workoutContent"></div>
+</section>
+<section aria-labelledby="progressHeading" class="view" data-view="progress" id="view-progress">
+<h2 class="sr-only" id="progressHeading">Progress</h2>
+<div id="progressContent"></div>
+</section>
+<section aria-labelledby="coachHeading" class="view" data-view="coach" id="view-coach">
+<h2 class="sr-only" id="coachHeading">Coach</h2>
+<div id="coachContent"></div>
+</section>
+</main>
+<button aria-label="Quick log" class="quick-log-fab" data-action="show-quick-log" id="quickLogButton" type="button">
+<span aria-hidden="true">+</span>
+</button>
+<nav aria-label="Primary navigation" class="bottom-nav">
+<button aria-current="page" class="nav-item active" data-nav="today" type="button">
+<span class="nav-icon" data-icon="home"></span>
+<span>Today</span>
+</button>
+<button class="nav-item" data-nav="workout" type="button">
+<span class="nav-icon" data-icon="dumbbell"></span>
+<span>Train</span>
+</button>
+<button class="nav-item" data-nav="progress" type="button">
+<span class="nav-icon" data-icon="chart"></span>
+<span>Progress</span>
+</button>
+<button class="nav-item" data-nav="coach" type="button">
+<span class="nav-icon" data-icon="spark"></span>
+<span>Coach</span>
+</button>
+</nav>
+</div>
+<div aria-live="polite" class="modal-root" id="modalRoot"></div>
+<div aria-live="polite" class="toast" id="toast" role="status"></div>
+<template id="iconTemplate">
+<svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.9" viewbox="0 0 24 24"></svg>
+</template>
+<script>
 "use strict";
 var __assign = (this && this.__assign) || function () {
     __assign = Object.assign || function(t) {
@@ -7232,6 +7430,756 @@ function init() {
     }
 }
 document.addEventListener("DOMContentLoaded", init);
+
+</script>
+<script id="momentum-v3-script">
+/* Momentum Coach 3.0: habit dashboard, weekly body check-in, 10-week programs */
+APP_VERSION = "3.0.0";
+PERSONAL_PROGRAM_VERSION = 2;
+ICONS.pill = '<path d="m8.2 4.2 11.6 11.6a4.2 4.2 0 0 1-5.9 5.9L2.3 10.1a4.2 4.2 0 0 1 5.9-5.9Z"/><path d="m7.5 15.5 8-8"/>';
+ICONS.book = '<path d="M4 4.5A3.5 3.5 0 0 1 7.5 1H20v17H7.5A3.5 3.5 0 0 0 4 21.5Z"/><path d="M4 4.5v17M8 6h8M8 10h8"/>';
+ICONS.skip = '<path d="M5 12h11M12 7l5 5-5 5"/><path d="M19 6v12"/>';
+
+var V3_DEFAULT_HABITS = [
+  { id: "morning-pills", title: "Morning pills", category: "medications", time: "07:00", days: [0,1,2,3,4,5,6], icon: "pill", points: 8, enabled: true },
+  { id: "walk-30", title: "30-minute walk", category: "healthy", time: "12:30", days: [0,1,2,3,4,5,6], icon: "walk", points: 10, enabled: true },
+  { id: "read-chapter", title: "Read one chapter", category: "healthy", time: "20:30", days: [0,1,2,3,4,5,6], icon: "book", points: 7, enabled: true },
+  { id: "evening-pills", title: "Evening pills", category: "medications", time: "21:30", days: [0,1,2,3,4,5,6], icon: "pill", points: 8, enabled: true }
+];
+
+function v3Clone(value) {
+  return JSON.parse(JSON.stringify(value));
+}
+function v3EnsureLog(log) {
+  log = log || {};
+  if (!log.meals) log.meals = {};
+  if (!log.timeOverrides) log.timeOverrides = {};
+  if (!log.habits) log.habits = {};
+  if (!Array.isArray(log.skippedTasks)) log.skippedTasks = [];
+  if (log.bodyFat === undefined) log.bodyFat = null;
+  return log;
+}
+function v3EnsureState(nextState) {
+  if (!nextState) return nextState;
+  nextState.version = 3;
+  nextState.appVersion = APP_VERSION;
+  nextState.profile = nextState.profile || createDefaultProfile();
+  if (nextState.profile.waterQuickAdd === undefined) nextState.profile.waterQuickAdd = 40;
+  if (nextState.profile.weighInDay === undefined) nextState.profile.weighInDay = 0;
+  if (!nextState.profile.weighInTime) nextState.profile.weighInTime = "08:00";
+  nextState.profile.programLengthWeeks = 10;
+  if (!Array.isArray(nextState.habitDefinitions) || !nextState.habitDefinitions.length) {
+    nextState.habitDefinitions = v3Clone(V3_DEFAULT_HABITS);
+  }
+  nextState.habitDefinitions = nextState.habitDefinitions.map(function (habit, index) {
+    return {
+      id: String(habit.id || "habit-" + index),
+      title: String(habit.title || "Healthy habit"),
+      category: habit.category === "medications" ? "medications" : "healthy",
+      time: habit.time || "12:00",
+      days: Array.isArray(habit.days) && habit.days.length ? habit.days.map(Number) : [0,1,2,3,4,5,6],
+      icon: habit.icon || (habit.category === "medications" ? "pill" : "check"),
+      points: Number(habit.points || 8),
+      optional: Boolean(habit.optional),
+      enabled: habit.enabled !== false
+    };
+  });
+  if (!Array.isArray(nextState.customExercises)) nextState.customExercises = [];
+  nextState.customExercises.forEach(function (exercise) {
+    if (exercise && exercise.key && !EXERCISES.some(function (item) { return item.key === exercise.key; })) EXERCISES.push(exercise);
+  });
+  nextState.logs = nextState.logs || {};
+  Object.keys(nextState.logs).forEach(function (key) { v3EnsureLog(nextState.logs[key]); });
+  nextState.coachProgram = nextState.coachProgram || { id: PERSONAL_PROGRAM_ID, version: PERSONAL_PROGRAM_VERSION, startDate: localDateKey() };
+  nextState.coachProgram.version = PERSONAL_PROGRAM_VERSION;
+  nextState.coachProgram.cycleLengthWeeks = 10;
+  if (nextState.workoutPlan) {
+    nextState.workoutPlan.cycleLengthWeeks = 10;
+    if (!nextState.workoutPlan.programName) nextState.workoutPlan.programName = "Momentum 10-Week Fat-Loss Cycle";
+    if (!nextState.workoutPlan.source) nextState.workoutPlan.source = "Momentum built-in";
+  }
+  return nextState;
+}
+
+var v2LoadState = loadState;
+loadState = function () {
+  return v3EnsureState(v2LoadState());
+};
+var v2CreateDayLog = createDayLog;
+createDayLog = function () {
+  return v3EnsureLog(v2CreateDayLog());
+};
+var v2SaveState = saveState;
+saveState = function (options) {
+  v3EnsureState(state);
+  return v2SaveState(options);
+};
+
+coachProgramWeek = function (referenceDate, program) {
+  if (referenceDate === undefined) referenceDate = new Date();
+  if (program === undefined) program = state && state.coachProgram;
+  var start = program && program.startDate ? dateFromKey(program.startDate) : new Date();
+  var current = referenceDate instanceof Date ? referenceDate : dateFromKey(referenceDate);
+  var elapsedDays = Math.max(0, Math.floor((current.getTime() - start.getTime()) / 86400000));
+  return Math.min(10, Math.floor(elapsedDays / 7) + 1);
+};
+cardioProgressionForWeek = function (week) {
+  var safeWeek = clamp(week, 1, 10);
+  if (safeWeek <= 2) return { block: "Weeks 1-2", enduranceMinutes: 30, intervalMinutes: 26, intervalText: "5-min warmup, 8 rounds of 30 sec hard / 90 sec easy, 5-min cooldown" };
+  if (safeWeek <= 4) return { block: "Weeks 3-4", enduranceMinutes: 35, intervalMinutes: 26, intervalText: "5-min warmup, 8 rounds of 45 sec hard / 75 sec easy, 5-min cooldown" };
+  if (safeWeek <= 6) return { block: "Weeks 5-6", enduranceMinutes: 40, intervalMinutes: 26, intervalText: "5-min warmup, 8 rounds of 60 sec hard / 60 sec easy, 5-min cooldown" };
+  if (safeWeek <= 8) return { block: "Weeks 7-8", enduranceMinutes: 45, intervalMinutes: 30, intervalText: "5-min warmup, 10 rounds of 60 sec hard / 60 sec easy, 5-min cooldown" };
+  if (safeWeek === 9) return { block: "Week 9", enduranceMinutes: 45, intervalMinutes: 32, intervalText: "5-min warmup, 8 rounds of 90 sec hard / 60 sec easy, 5-min cooldown" };
+  return { block: "Week 10 consolidation", enduranceMinutes: 35, intervalMinutes: 24, intervalText: "5-min warmup, 6 rounds of 60 sec controlled hard / 90 sec easy, 4-min cooldown" };
+};
+
+function v3ProgramPlansForWeek(week) {
+  if (state.workoutPlan && Array.isArray(state.workoutPlan.weeks) && state.workoutPlan.weeks.length) {
+    var item = state.workoutPlan.weeks[Math.max(0, Math.min(state.workoutPlan.weeks.length - 1, Number(week || 1) - 1))];
+    return item && Array.isArray(item.workouts) ? item.workouts : [];
+  }
+  return state.workoutPlan && Array.isArray(state.workoutPlan.schedule) ? state.workoutPlan.schedule : [];
+}
+getScheduledWorkout = function (dateKey) {
+  if (dateKey === undefined) dateKey = localDateKey();
+  var date = dateFromKey(dateKey);
+  var plans = v3ProgramPlansForWeek(coachProgramWeek(date));
+  var basePlan = plans.find(function (item) { return Number(item.weekday) === date.getDay(); }) || null;
+  return resolvePlanForCurrentWeek(basePlan, dateKey);
+};
+getPlanById = function (planId, dateKey) {
+  if (dateKey === undefined) dateKey = localDateKey();
+  var basePlan = null;
+  if (state.workoutPlan && Array.isArray(state.workoutPlan.weeks)) {
+    state.workoutPlan.weeks.some(function (week) {
+      basePlan = (week.workouts || []).find(function (item) { return item.id === planId; }) || null;
+      return Boolean(basePlan);
+    });
+  }
+  if (!basePlan && state.workoutPlan && Array.isArray(state.workoutPlan.schedule)) {
+    basePlan = state.workoutPlan.schedule.find(function (item) { return item.id === planId; }) || null;
+  }
+  if (!basePlan && state.workoutPlan && state.workoutPlan.fallback && state.workoutPlan.fallback.id === planId) basePlan = state.workoutPlan.fallback;
+  return resolvePlanForCurrentWeek(basePlan, dateKey);
+};
+
+function v3HabitScheduled(habit, date) {
+  return habit && habit.enabled !== false && (habit.days || []).map(Number).includes(date.getDay());
+}
+function v3TaskSkipped(log, taskId) {
+  return Array.isArray(log.skippedTasks) && log.skippedTasks.includes(taskId);
+}
+function v3FinalizeTask(task, log) {
+  task.skipped = v3TaskSkipped(log, task.id);
+  if (task.skipped) task.optional = true;
+  return task;
+}
+getTasks = function (dateKey, create) {
+  if (dateKey === undefined) dateKey = localDateKey();
+  if (create === undefined) create = true;
+  var log = getDayLog(dateKey, create);
+  if (!log) return [];
+  v3EnsureLog(log);
+  var date = dateFromKey(dateKey);
+  var tasks = [];
+  state.mealSchedule.forEach(function (meal) {
+    var mealLog = getMealLog(dateKey, meal.id, create);
+    var idea = getMealIdea(meal, mealLog.optionIndex);
+    tasks.push(v3FinalizeTask({
+      id: "meal:" + meal.id,
+      type: "meal",
+      category: "meals",
+      mealId: meal.id,
+      title: meal.label,
+      detail: mealLog.complete ? meal.targetProtein + "g protein planned" : idea.name,
+      time: getTaskTime(log, "meal:" + meal.id, meal.time),
+      complete: Boolean(mealLog.complete),
+      points: 28 / Math.max(1, state.mealSchedule.length),
+      icon: "food"
+    }, log));
+  });
+  var workout = getWorkoutForDate(dateKey);
+  var active = state.activeWorkout && state.activeWorkout.dateKey === dateKey;
+  var activePlan = active ? getPlanById(state.activeWorkout.planId, dateKey) : null;
+  var taskPlan = activePlan || workout;
+  if (taskPlan || (log.workout && log.workout.complete)) {
+    var completed = Boolean(log.workout && log.workout.complete);
+    var optional = completed ? Boolean(log.workout.optional) : Boolean(taskPlan && taskPlan.optional);
+    var kind = completed ? (log.workout.kind || "strength") : ((taskPlan && taskPlan.kind) || "strength");
+    var detail = completed
+      ? (log.workout.cardioMinutes ? log.workout.cardioMinutes + " cardio min - " : "") + (log.workout.durationMinutes || 0) + " session min completed"
+      : optional
+        ? "Optional - " + ((taskPlan && taskPlan.estimatedMinutes) || 25) + " min easy recovery"
+        : ((taskPlan && taskPlan.exercises && taskPlan.exercises.length) || 0) + " exercises - about " + ((taskPlan && taskPlan.estimatedMinutes) || state.profile.sessionMinutes) + " min";
+    tasks.push(v3FinalizeTask({
+      id: "workout",
+      type: "workout",
+      category: "workouts",
+      planId: (taskPlan && taskPlan.id) || (log.workout && log.workout.planId),
+      title: active ? "Resume " + ((activePlan && activePlan.title) || "workout") : ((taskPlan && taskPlan.title) || (log.workout && log.workout.title) || "Workout"),
+      detail: detail,
+      time: getTaskTime(log, "workout", state.profile.workoutTime),
+      complete: completed,
+      optional: optional,
+      points: optional ? 0 : 32,
+      icon: ["cardio", "recovery", "fallback"].includes(kind) ? "walk" : "dumbbell"
+    }, log));
+  }
+  var waterTarget = Number(state.profile.waterTarget || 80);
+  tasks.push(v3FinalizeTask({
+    id: "water",
+    type: "water",
+    category: "healthy",
+    title: "Water",
+    detail: Math.round(Number(log.water || 0) / 40 * 10) / 10 + " of " + Math.round(waterTarget / 40 * 10) / 10 + " Owala bottles",
+    time: getTaskTime(log, "water", addMinutesToTime(state.profile.bedTime, -90)),
+    complete: Number(log.water || 0) >= waterTarget,
+    points: 10,
+    icon: "water"
+  }, log));
+  if (date.getDay() === Number(state.profile.weighInDay || 0)) {
+    var metrics = [];
+    if (log.weight) metrics.push(log.weight + " " + state.profile.weightUnit);
+    if (log.bodyFat) metrics.push(log.bodyFat + "% fat");
+    tasks.push(v3FinalizeTask({
+      id: "weigh-in",
+      type: "weight",
+      category: "healthy",
+      title: "Weekly body check-in",
+      detail: metrics.length ? metrics.join(" - ") : "Log weight and body-fat percentage",
+      time: getTaskTime(log, "weigh-in", state.profile.weighInTime || "08:00"),
+      complete: Boolean(log.weight),
+      points: 8,
+      icon: "scale"
+    }, log));
+  }
+  (state.habitDefinitions || []).forEach(function (habit) {
+    if (!v3HabitScheduled(habit, date)) return;
+    tasks.push(v3FinalizeTask({
+      id: "habit:" + habit.id,
+      type: "habit",
+      category: habit.category,
+      habitId: habit.id,
+      title: habit.title,
+      detail: habit.category === "medications" ? "Daily medication check" : "Daily habit",
+      time: getTaskTime(log, "habit:" + habit.id, habit.time),
+      complete: Boolean(log.habits[habit.id]),
+      optional: Boolean(habit.optional),
+      points: habit.optional ? 0 : Number(habit.points || 8),
+      icon: habit.icon || (habit.category === "medications" ? "pill" : "check")
+    }, log));
+  });
+  return tasks.sort(function (a, b) { return timeToMinutes(a.time) - timeToMinutes(b.time); });
+};
+getDailyScore = function (dateKey) {
+  if (dateKey === undefined) dateKey = localDateKey();
+  var isToday = dateKey === localDateKey();
+  if (!isToday && !state.logs[dateKey]) return 0;
+  var tasks = getTasks(dateKey, isToday).filter(function (task) { return !task.optional && !task.skipped; });
+  var total = tasks.reduce(function (sum, task) { return sum + Number(task.points || 0); }, 0);
+  var earned = tasks.reduce(function (sum, task) { return sum + (task.complete ? Number(task.points || 0) : 0); }, 0);
+  return total ? Math.round(earned / total * 100) : 100;
+};
+getNextTask = function (dateKey) {
+  if (dateKey === undefined) dateKey = localDateKey();
+  var pending = getTasks(dateKey).filter(function (task) { return !task.complete && !task.optional && !task.skipped; });
+  if (!pending.length) return null;
+  var nowMinutes = new Date().getHours() * 60 + new Date().getMinutes();
+  return pending.find(function (task) { return timeToMinutes(task.time) >= nowMinutes; }) || pending[0];
+};
+taskActionLabel = function (task) {
+  if (!task) return "Review today";
+  if (task.type === "workout") return state.activeWorkout ? "Resume workout" : task.optional ? "Start recovery" : "Start workout";
+  if (task.type === "meal") return "Mark meal done";
+  if (task.type === "weight") return "Log weekly check-in";
+  if (task.type === "water") return "Add 40 oz";
+  if (task.type === "habit") return task.complete ? "Reopen habit" : "Mark complete";
+  return "Complete";
+};
+taskStatus = function (task) {
+  if (task.skipped) return "Skipped";
+  if (task.complete) return "Done";
+  if (task.optional) return "Optional";
+  var nowMinutes = new Date().getHours() * 60 + new Date().getMinutes();
+  return timeToMinutes(task.time) < nowMinutes ? "Open" : formatClock(task.time);
+};
+performTaskAction = function (taskId) {
+  var task = getTasks(localDateKey()).find(function (item) { return item.id === taskId; });
+  if (!task) return;
+  if (task.skipped) {
+    v3UnskipTask(task.id);
+    return;
+  }
+  if (task.type === "meal") toggleMeal(task.mealId);
+  else if (task.type === "workout") {
+    if (task.complete) { setView("progress"); showToast("Today's workout is already complete."); }
+    else startWorkout(task.planId || (getScheduledWorkout() && getScheduledWorkout().id));
+  }
+  else if (task.type === "water") {
+    var waterLog = v3EnsureLog(getDayLog(localDateKey()));
+    waterLog.water = Math.max(0, Number(waterLog.water || 0) + Number(state.profile.waterQuickAdd || 40));
+    saveState();
+    showToast("Added one 40 oz Owala.");
+  }
+  else if (task.type === "weight") showWeightModal();
+  else if (task.type === "habit") {
+    var log = v3EnsureLog(getDayLog(localDateKey()));
+    log.habits[task.habitId] = !log.habits[task.habitId];
+    saveState();
+    showToast(log.habits[task.habitId] ? task.title + " complete." : task.title + " reopened.");
+  }
+};
+
+function v3SkipTask(taskId) {
+  var log = v3EnsureLog(getDayLog(localDateKey()));
+  if (!log.skippedTasks.includes(taskId)) log.skippedTasks.push(taskId);
+  saveState();
+  showToast("Skipped for today. It will not lower today's score.");
+}
+function v3UnskipTask(taskId) {
+  var log = v3EnsureLog(getDayLog(localDateKey()));
+  log.skippedTasks = log.skippedTasks.filter(function (id) { return id !== taskId; });
+  saveState();
+  showToast("Added back to today.");
+}
+
+function v3HabitRow(task) {
+  var action = task.skipped ? "unskip-task" : "task-action";
+  var status = taskStatus(task);
+  return '<div class="habit-row ' + (task.complete ? 'done ' : '') + (task.skipped ? 'skipped' : '') + '">' +
+    '<button class="habit-main" type="button" data-action="' + action + '" data-task-id="' + escapeHtml(task.id) + '">' +
+      '<span class="habit-row-icon">' + icon(task.icon || "check", "icon") + '</span>' +
+      '<span class="habit-copy"><strong>' + escapeHtml(task.title) + '</strong><span>' + escapeHtml(status + ' - ' + task.detail) + '</span></span>' +
+    '</button>' +
+    (!task.complete && !task.optional && !task.skipped ? '<button class="habit-skip" type="button" data-action="skip-task" data-task-id="' + escapeHtml(task.id) + '">Skip today</button>' : (task.skipped ? '<button class="habit-skip" type="button" data-action="unskip-task" data-task-id="' + escapeHtml(task.id) + '">Undo</button>' : '<span></span>')) +
+    '<button class="habit-complete ' + (task.complete ? 'done' : '') + '" type="button" data-action="' + action + '" data-task-id="' + escapeHtml(task.id) + '" aria-label="' + escapeHtml(task.complete ? 'Reopen ' + task.title : task.skipped ? 'Add back ' + task.title : 'Complete ' + task.title) + '">' + (task.complete ? icon("check", "icon") : task.skipped ? icon("skip", "icon") : '') + '</button>' +
+  '</div>';
+}
+function v3Category(title, subtitle, tasks, editAction) {
+  if (!tasks.length) return '';
+  var applicable = tasks.filter(function (task) { return !task.optional && !task.skipped; });
+  var done = applicable.filter(function (task) { return task.complete; }).length;
+  return '<section class="habit-category-card">' +
+    '<div class="habit-category-head"><div><h3>' + escapeHtml(title) + '</h3><p>' + escapeHtml(subtitle) + '</p></div>' +
+    (editAction ? '<button class="text-button" type="button" data-action="' + editAction + '">Edit</button>' : '<span class="habit-category-count">' + done + '/' + applicable.length + '</span>') + '</div>' +
+    '<div class="habit-list">' + tasks.map(v3HabitRow).join('') + '</div></section>';
+}
+renderToday = function () {
+  var container = document.getElementById("todayContent");
+  var dateKey = localDateKey();
+  var log = v3EnsureLog(getDayLog(dateKey));
+  var tasks = getTasks(dateKey);
+  var nextTask = getNextTask(dateKey);
+  var score = getDailyScore(dateKey);
+  var activeTasks = tasks.filter(function (task) { return !task.optional && !task.skipped; });
+  var completeCount = activeTasks.filter(function (task) { return task.complete; }).length;
+  var skippedCount = tasks.filter(function (task) { return task.skipped; }).length;
+  var protein = getProteinTotal(dateKey);
+  var proteinTarget = Number(state.profile.proteinTarget || 150);
+  var water = Number(log.water || 0);
+  var waterTarget = Number(state.profile.waterTarget || 80);
+  var bottles = Math.round(water / 40 * 10) / 10;
+  var bottleTarget = Math.round(waterTarget / 40 * 10) / 10;
+  var streak = getStreak();
+  var hero;
+  if (nextTask) {
+    hero = '<div class="dashboard-hero"><div class="dashboard-hero-top"><div><p class="dashboard-kicker">YOUR NEXT MOVE</p><h2>' + escapeHtml(nextTask.title) + '</h2><p>' + escapeHtml(nextTask.detail) + '</p></div><div class="hero-score"><strong>' + score + '%</strong><span>today</span></div></div>' +
+      '<div class="dashboard-hero-footer"><span>' + icon("fire", "inline-icon") + ' ' + streak + ' day streak</span><span>' + completeCount + ' of ' + activeTasks.length + ' complete</span></div>' +
+      '<div class="hero-actions"><button class="button dashboard-primary" type="button" data-action="task-action" data-task-id="' + escapeHtml(nextTask.id) + '">' + icon(nextTask.type === "workout" ? "play" : "check", "button-icon") + ' ' + escapeHtml(taskActionLabel(nextTask)) + '</button>' +
+      '<button class="button dashboard-secondary skip-next-button" type="button" data-action="skip-task" data-task-id="' + escapeHtml(nextTask.id) + '">' + icon("skip", "button-icon") + ' Skip today</button></div></div>';
+  } else {
+    hero = '<div class="dashboard-hero day-finished"><div class="dashboard-hero-top"><div><p class="dashboard-kicker">QUEUE CLEAR</p><h2>' + (skippedCount ? 'You chose what matters today.' : 'You closed the loop.') + '</h2><p>' + (skippedCount ? skippedCount + ' item' + (skippedCount === 1 ? '' : 's') + ' skipped without penalty. You can add any of them back below.' : 'Everything you planned for today is complete.') + '</p></div><div class="hero-score"><strong>' + score + '%</strong><span>today</span></div></div></div>';
+  }
+  var meals = tasks.filter(function (task) { return task.category === "meals"; });
+  var workouts = tasks.filter(function (task) { return task.category === "workouts"; });
+  var healthy = tasks.filter(function (task) { return task.category === "healthy"; });
+  var meds = tasks.filter(function (task) { return task.category === "medications"; });
+  container.innerHTML = '<div class="stack dashboard-stack">' + hero +
+    '<section class="dashboard-section"><div class="section-head compact-head"><div><h2>Today at a glance</h2><p>Habits, not a rigid schedule.</p></div></div><div class="today-metrics">' +
+      '<button class="today-metric text-button-reset" type="button" data-nav="progress"><small>Score</small><strong>' + score + '%</strong><span>' + completeCount + '/' + activeTasks.length + ' habits</span></button>' +
+      '<button class="today-metric text-button-reset" type="button" data-action="open-coach-nutrition"><small>Protein</small><strong>' + Math.round(protein) + 'g</strong><span>of ' + proteinTarget + 'g</span></button>' +
+      '<button class="today-metric text-button-reset" type="button" data-action="add-water" data-amount="40"><small>Water</small><strong>' + bottles + '</strong><span>of ' + bottleTarget + ' Owalas</span></button>' +
+    '</div></section>' +
+    v3Category("Meals", "Your simple breakfast, lunch, snacks, and dinner anchors.", meals, "edit-meals") +
+    v3Category("Workouts", "Strength, Peloton, treadmill, and recovery.", workouts, null) +
+    v3Category("Other healthy habits", "Water, walking, reading, and the weekly check-in.", healthy, "show-habit-settings") +
+    v3Category("Pills", "A simple morning and night check.", meds, "show-habit-settings") +
+    '<section class="dashboard-section"><div class="section-head compact-head"><div><h2>Quick actions</h2><p>One tap, then move on.</p></div></div><div class="dashboard-quick-grid">' +
+      '<button type="button" data-action="add-water" data-amount="40"><strong>+40 oz</strong><span>1 Owala</span></button>' +
+      '<button type="button" data-action="add-protein" data-amount="25"><strong>+25g</strong><span>Log protein</span></button>' +
+      '<button type="button" data-action="show-weight"><strong>Check-in</strong><span>Weight + body fat</span></button>' +
+      '<button type="button" data-action="start-fallback"><strong>10 min</strong><span>Minimum workout</span></button>' +
+    '</div></section></div>';
+};
+renderWaterCard = function (dateKey) {
+  if (dateKey === undefined) dateKey = localDateKey();
+  var log = v3EnsureLog(getDayLog(dateKey));
+  var water = Number(log.water || 0);
+  var target = Number(state.profile.waterTarget || 80);
+  var progress = clamp(water / target * 100, 0, 100);
+  var bottles = Math.round(water / 40 * 10) / 10;
+  var targetBottles = Math.round(target / 40 * 10) / 10;
+  return '<section class="section"><div class="card water-card"><div class="water-head"><div><h3>Water</h3><p>Your 40 oz Owala is the default unit.</p></div><span class="water-amount">' + Math.round(water) + ' / ' + target + ' oz</span></div>' +
+    '<div class="water-bottle-line"><strong>' + bottles + '</strong><span>of ' + targetBottles + ' bottles</span></div>' +
+    '<div class="progress-track" style="margin-top:12px"><span style="--progress:' + progress + '%"></span></div><div class="water-buttons">' +
+      '<button class="water-button" type="button" data-action="add-water" data-amount="40">+1 Owala</button>' +
+      '<button class="water-button" type="button" data-action="add-water" data-amount="20">+1/2</button>' +
+      '<button class="water-button" type="button" data-action="add-water" data-amount="-40">-1</button>' +
+    '</div></div></section>';
+};
+
+showWeightModal = function () {
+  var log = v3EnsureLog(getDayLog(localDateKey()));
+  var weightValue = log.weight !== null && log.weight !== undefined ? log.weight : (state.profile.currentWeight || "");
+  var fatValue = log.bodyFat !== null && log.bodyFat !== undefined ? log.bodyFat : "";
+  openModal(modalHeader("Weekly body check-in", "Once a week is enough for the trend.") +
+    '<div class="modal-body"><div class="form-row-2">' +
+      '<div class="field"><label for="weightInput">Weight (' + escapeHtml(state.profile.weightUnit) + ')</label><input class="input" id="weightInput" type="number" min="0" step="0.1" value="' + escapeHtml(weightValue) + '" inputmode="decimal" placeholder="0.0"></div>' +
+      '<div class="field"><label for="bodyFatInput">Body fat (%)</label><input class="input" id="bodyFatInput" type="number" min="1" max="80" step="0.1" value="' + escapeHtml(fatValue) + '" inputmode="decimal" placeholder="Optional"></div>' +
+    '</div><p class="inline-note">Use similar conditions each week. Scale body-fat readings are estimates, so focus on the longer trend.</p></div>' +
+    '<div class="modal-actions"><button class="button button-ghost" type="button" data-action="close-modal">Cancel</button><button class="button" type="button" data-action="save-body-metrics">Save check-in</button></div>', { centered: true });
+};
+function v3SaveBodyMetrics() {
+  var weightInput = document.getElementById("weightInput");
+  var fatInput = document.getElementById("bodyFatInput");
+  var weight = Number(weightInput && weightInput.value);
+  var fatRaw = fatInput ? fatInput.value.trim() : "";
+  var fat = fatRaw === "" ? null : Number(fatRaw);
+  if (!Number.isFinite(weight) || weight <= 0) { showToast("Enter a valid weight.", true); return; }
+  if (fat !== null && (!Number.isFinite(fat) || fat <= 0 || fat > 80)) { showToast("Enter a valid body-fat percentage or leave it blank.", true); return; }
+  var log = v3EnsureLog(getDayLog(localDateKey()));
+  log.weight = weight;
+  log.bodyFat = fat;
+  state.profile.currentWeight = weight;
+  saveState({ render: false });
+  closeModal();
+  renderAll();
+  showToast("Weekly body check-in saved.");
+}
+function getRecentBodyFatEntries(limit) {
+  if (limit === undefined) limit = 30;
+  return Object.entries(state.logs || {}).filter(function (entry) {
+    var value = entry[1] && entry[1].bodyFat;
+    return value !== null && value !== undefined && value !== "" && Number.isFinite(Number(value));
+  }).map(function (entry) { return { dateKey: entry[0], value: Number(entry[1].bodyFat) }; })
+    .sort(function (a, b) { return a.dateKey.localeCompare(b.dateKey); }).slice(-limit);
+}
+function v3DrawLineChart(canvasId, entries, suffix) {
+  var canvas = document.getElementById(canvasId);
+  if (!canvas || entries.length < 2) return;
+  var rect = canvas.getBoundingClientRect();
+  var dpr = window.devicePixelRatio || 1;
+  canvas.width = Math.max(1, Math.floor(rect.width * dpr));
+  canvas.height = Math.max(1, Math.floor(rect.height * dpr));
+  var ctx = canvas.getContext("2d");
+  ctx.scale(dpr, dpr);
+  var styles = getComputedStyle(document.documentElement);
+  var primary = styles.getPropertyValue("--primary").trim();
+  var grid = styles.getPropertyValue("--border").trim();
+  var text = styles.getPropertyValue("--text-soft").trim();
+  var width = rect.width, height = rect.height;
+  var pad = { top: 18, right: 16, bottom: 28, left: 44 };
+  var values = entries.map(function (item) { return item.value; });
+  var min = Math.min.apply(Math, values), max = Math.max.apply(Math, values);
+  if (min === max) { min -= 1; max += 1; }
+  var rangePad = Math.max(0.4, (max - min) * .18); min -= rangePad; max += rangePad;
+  ctx.clearRect(0, 0, width, height); ctx.font = "11px -apple-system, BlinkMacSystemFont, sans-serif";
+  ctx.fillStyle = text; ctx.strokeStyle = grid; ctx.lineWidth = 1;
+  for (var i = 0; i <= 3; i++) {
+    var y = pad.top + (height - pad.top - pad.bottom) * (i / 3);
+    var val = max - (max - min) * (i / 3);
+    ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(width - pad.right, y); ctx.stroke();
+    ctx.textAlign = "right"; ctx.fillText(val.toFixed(1) + suffix, pad.left - 7, y + 4);
+  }
+  var points = entries.map(function (item, index) {
+    return { x: pad.left + (width - pad.left - pad.right) * (index / Math.max(1, entries.length - 1)), y: pad.top + (height - pad.top - pad.bottom) * ((max - item.value) / (max - min)) };
+  });
+  ctx.beginPath(); points.forEach(function (point, index) { if (!index) ctx.moveTo(point.x, point.y); else ctx.lineTo(point.x, point.y); });
+  ctx.strokeStyle = primary; ctx.lineWidth = 3; ctx.lineJoin = "round"; ctx.lineCap = "round"; ctx.stroke();
+  points.forEach(function (point) { ctx.beginPath(); ctx.arc(point.x, point.y, 3.5, 0, Math.PI * 2); ctx.fillStyle = primary; ctx.fill(); });
+  ctx.fillStyle = text; ctx.textAlign = "left"; ctx.fillText(formatDate(dateFromKey(entries[0].dateKey), { month: "short", day: "numeric" }), pad.left, height - 7);
+  ctx.textAlign = "right"; ctx.fillText(formatDate(dateFromKey(entries[entries.length - 1].dateKey), { month: "short", day: "numeric" }), width - pad.right, height - 7);
+}
+var v2DrawWeightChart = drawWeightChart;
+drawWeightChart = function () {
+  v2DrawWeightChart();
+  v3DrawLineChart("bodyFatChart", getRecentBodyFatEntries(30), "%");
+};
+
+var v2RenderProgress = renderProgress;
+renderProgress = function () {
+  v2RenderProgress();
+  var container = document.getElementById("progressContent");
+  if (!container) return;
+  container.innerHTML = container.innerHTML.replace(/of 8/g, "of 10").replace(/\/8/g, "/10").replace(/Optional daily or weekly entries will appear here\./g, "Your weekly entries will appear here.");
+  var bodyFatEntries = getRecentBodyFatEntries(30);
+  var currentFat = bodyFatEntries.length ? bodyFatEntries[bodyFatEntries.length - 1].value : null;
+  var sections = Array.prototype.slice.call(container.querySelectorAll("section"));
+  var weightSection = sections.find(function (section) { var h = section.querySelector("h2"); return h && h.textContent.trim() === "Weight trend"; });
+  if (weightSection) {
+    var fatSection = document.createElement("section");
+    fatSection.className = "section";
+    fatSection.innerHTML = '<div class="section-head"><div><h2>Body-fat trend</h2><p>' + (currentFat !== null ? 'Latest: ' + currentFat.toFixed(1) + '%' : 'Log body fat with your weekly weigh-in.') + '</p></div><button class="text-button" type="button" data-action="show-weight">Log</button></div><div class="card chart-card">' +
+      (bodyFatEntries.length >= 2 ? '<div class="chart-wrap"><canvas id="bodyFatChart" aria-label="Body fat trend chart"></canvas></div>' : '<div class="empty-state"><span class="empty-icon">' + icon("chart", "icon") + '</span><h3>' + (bodyFatEntries.length === 1 ? 'One entry logged' : 'No body-fat entries yet') + '</h3><p>' + (bodyFatEntries.length === 1 ? 'Log next week to begin the trend line.' : 'Your scale percentage can be recorded with weight.') + '</p></div>') + '</div>';
+    weightSection.insertAdjacentElement("afterend", fatSection);
+  }
+};
+
+function v3ProgramCard() {
+  var week = coachProgramWeek();
+  var name = (state.workoutPlan && state.workoutPlan.programName) || "Momentum 10-Week Strength Cycle";
+  var source = (state.workoutPlan && state.workoutPlan.source) || "Momentum built-in";
+  return '<div class="program-studio-card"><div class="program-studio-top"><div><span class="workout-badge">' + icon("spark", "icon") + ' 10-WEEK PROGRAM</span><h2>' + escapeHtml(name) + '</h2><p>Week ' + week + ' of 10 - ' + escapeHtml(source) + '. Generate a future cycle in ChatGPT, then paste the JSON here. No API key or AI connection is stored in Momentum.</p></div><span class="program-cycle-badge">' + week + '<small>/10</small></span></div><div class="program-studio-actions"><button class="button button-ghost" type="button" data-action="copy-program-prompt">' + icon("copy", "button-icon") + ' Copy ChatGPT prompt</button><button class="button" type="button" data-action="show-program-import">' + icon("upload", "button-icon") + ' Load program</button></div></div>';
+}
+var v2RenderWorkout = renderWorkout;
+renderWorkout = function () {
+  v2RenderWorkout();
+  var container = document.getElementById("workoutContent");
+  if (!container) return;
+  container.innerHTML = container.innerHTML.replace(/of 8/g, "of 10").replace(/8-WEEK FAT-LOSS \+ CARDIO PLAN/g, "10-WEEK FAT-LOSS + CARDIO PLAN").replace(/\/8/g, "/10");
+  var stack = container.querySelector(".stack");
+  if (stack) stack.insertAdjacentHTML("afterbegin", v3ProgramCard());
+};
+var v2RenderCoach = renderCoach;
+renderCoach = function () {
+  v2RenderCoach();
+  var container = document.getElementById("coachContent");
+  if (!container) return;
+  container.innerHTML = container.innerHTML.replace(/of 8/g, "of 10").replace(/\/8/g, "/10");
+  var reflowButton = container.querySelector('[data-action="show-reflow"]');
+  if (reflowButton) {
+    reflowButton.dataset.action = "show-habit-settings";
+    reflowButton.innerHTML = '<span>' + icon("check", "icon") + '</span><strong>Edit habits</strong><small>Walking, reading, pills, and weigh-in</small>';
+  }
+  var settings = container.querySelector("#coachSettings");
+  if (settings) settings.insertAdjacentHTML("beforebegin", '<section class="dashboard-section"><div class="section-head compact-head"><div><h2>10-week strength cycles</h2><p>Use ChatGPT only when you want a fresh program.</p></div></div>' + v3ProgramCard() + '</section>');
+  var settingsCard = settings && settings.querySelector(".settings-card");
+  if (settingsCard) {
+    settingsCard.insertAdjacentHTML("afterbegin", '<button class="setting-row" type="button" data-action="show-habit-settings"><span class="setting-row-copy"><strong>Habits and weekly check-in</strong><span>Walking, reading, pills, and ' + escapeHtml(DAYS[Number(state.profile.weighInDay || 0)]) + ' weigh-in</span></span><span class="setting-row-value">Edit ' + icon("chevron", "chevron") + '</span></button>');
+  }
+};
+var v2RenderHeader = renderHeader;
+renderHeader = function () {
+  v2RenderHeader();
+  var eyebrow = document.getElementById("eyebrow");
+  if (currentView === "workout" && eyebrow) eyebrow.textContent = "WEEK " + coachProgramWeek() + " OF 10";
+};
+
+function v3WeekdayChecks(days, prefix) {
+  return '<div class="weekday-checks">' + DAY_SHORT.map(function (day, index) {
+    return '<label><input type="checkbox" data-habit-day="' + index + '" ' + ((days || []).map(Number).includes(index) ? 'checked' : '') + '><span>' + day.charAt(0) + '</span></label>';
+  }).join('') + '</div>';
+}
+function v3HabitEditorRow(habit) {
+  return '<div class="habit-editor-row" data-habit-editor-row data-habit-id="' + escapeHtml(habit.id || uid("habit")) + '"><div class="habit-editor-top"><div class="field"><label>Habit</label><input class="input" data-habit-field="title" value="' + escapeHtml(habit.title || "Healthy habit") + '"></div><button class="icon-button soft" type="button" data-action="remove-habit-row" aria-label="Remove habit">' + icon("trash", "icon") + '</button></div><div class="form-row-2" style="margin-top:10px"><div class="field"><label>Group</label><div class="select-wrap"><select class="select" data-habit-field="category"><option value="healthy" ' + (habit.category !== "medications" ? 'selected' : '') + '>Other healthy habits</option><option value="medications" ' + (habit.category === "medications" ? 'selected' : '') + '>Pills</option></select></div></div><div class="field"><label>Usual time</label><input class="input" data-habit-field="time" type="time" value="' + escapeHtml(habit.time || "12:00") + '"></div></div><span class="field-label" style="margin-top:10px">Days</span>' + v3WeekdayChecks(habit.days || [0,1,2,3,4,5,6]) + '</div>';
+}
+function showHabitSettings() {
+  var rows = (state.habitDefinitions || []).map(v3HabitEditorRow).join('');
+  openModal(modalHeader("Habits and weekly check-in", "Make the dashboard fit your actual routine.") + '<div class="modal-body"><div class="field"><label for="weighInDay">Weekly weigh-in day</label><div class="form-row-2"><div class="select-wrap"><select class="select" id="weighInDay">' + DAYS.map(function (day, index) { return '<option value="' + index + '" ' + (Number(state.profile.weighInDay || 0) === index ? 'selected' : '') + '>' + day + '</option>'; }).join('') + '</select></div><input class="input" id="weighInTime" type="time" value="' + escapeHtml(state.profile.weighInTime || "08:00") + '"></div><p class="field-help">The weigh-in appears only once each week. You can still log it manually at any time.</p></div><div class="settings-subhead" style="margin-top:18px">Daily and weekly habits</div><div id="habitEditorRows">' + rows + '</div><button class="button button-ghost button-block" type="button" data-action="add-habit-row">' + icon("plus", "button-icon") + ' Add habit</button></div><div class="modal-actions"><button class="button button-ghost" type="button" data-action="close-modal">Cancel</button><button class="button" type="button" data-action="save-habits">Save habits</button></div>', { full: true, focus: false });
+}
+function v3SaveHabits() {
+  var rows = Array.prototype.slice.call(document.querySelectorAll("[data-habit-editor-row]"));
+  state.habitDefinitions = rows.map(function (row, index) {
+    var titleInput = row.querySelector('[data-habit-field="title"]');
+    var categoryInput = row.querySelector('[data-habit-field="category"]');
+    var timeInput = row.querySelector('[data-habit-field="time"]');
+    var days = Array.prototype.slice.call(row.querySelectorAll('[data-habit-day]:checked')).map(function (input) { return Number(input.dataset.habitDay); });
+    var category = categoryInput && categoryInput.value === "medications" ? "medications" : "healthy";
+    return { id: row.dataset.habitId || uid("habit"), title: (titleInput && titleInput.value.trim()) || "Habit " + (index + 1), category: category, time: (timeInput && timeInput.value) || "12:00", days: days.length ? days : [0,1,2,3,4,5,6], icon: category === "medications" ? "pill" : ((row.dataset.habitId || "").includes("read") ? "book" : (row.dataset.habitId || "").includes("walk") ? "walk" : "check"), points: category === "medications" ? 8 : 9, enabled: true };
+  });
+  state.profile.weighInDay = Number(document.getElementById("weighInDay").value || 0);
+  state.profile.weighInTime = document.getElementById("weighInTime").value || "08:00";
+  saveState({ render: false }); closeModal(); renderAll(); showToast("Habits updated.");
+}
+
+function v3Slug(text) {
+  return String(text || "exercise").toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_+|_+$/g, "") || "exercise";
+}
+function v3FirstNumber(value, fallback) {
+  var match = String(value || "").match(/\d+/);
+  return match ? Number(match[0]) : fallback;
+}
+function v3ExerciseFromInput(item, index) {
+  var name = String(item.name || item.exercise || item.exerciseName || item.exerciseKey || "Exercise " + (index + 1));
+  var key = v3Slug(item.exerciseKey || name);
+  var existing = EXERCISES.find(function (exercise) { return exercise.key === key; });
+  if (!existing) {
+    var lower = name.toLowerCase();
+    var requires = Array.isArray(item.requires) && item.requires.length ? item.requires : (lower.includes("dumbbell") ? ["dumbbells"] : lower.includes("peloton") ? ["peloton"] : lower.includes("treadmill") ? ["treadmill"] : ["bodyweight"]);
+    existing = { key: key, name: name, pattern: item.pattern || "custom", requires: requires, difficulty: 1, tier: 1, type: item.type || "compound", increment: requires.includes("dumbbells") ? 5 : 0, cue: String(item.cue || item.coachCue || "Use controlled form and stop if an exercise causes sharp pain.") };
+    EXERCISES.push(existing);
+    if (!Array.isArray(state.customExercises)) state.customExercises = [];
+    if (!state.customExercises.some(function (exercise) { return exercise.key === key; })) state.customExercises.push(v3Clone(existing));
+  }
+  var target = String(item.targetReps || item.reps || "8-12");
+  return {
+    exerciseKey: key,
+    sets: clamp(Number(item.sets || 3), 1, 8),
+    targetReps: target,
+    defaultReps: Number(item.defaultReps || v3FirstNumber(target, 10)),
+    rest: clamp(Number(item.restSeconds || item.rest || 60), 0, 300),
+    coachCue: String(item.cue || item.coachCue || existing.cue || ""),
+    startingWeight: item.startingWeight === undefined || item.startingWeight === null || item.startingWeight === "" ? "" : Number(item.startingWeight)
+  };
+}
+function v3NormalizeWorkout(workout, weekNumber, index) {
+  var exercises = Array.isArray(workout.exercises) ? workout.exercises : [];
+  if (!exercises.length) throw new Error("Every workout needs at least one exercise.");
+  return {
+    id: String(workout.id || "chatgpt-w" + weekNumber + "-d" + Number(workout.weekday) + "-" + index),
+    weekday: clamp(Number(workout.weekday), 0, 6),
+    title: String(workout.title || "Strength Workout"),
+    focus: String(workout.focus || "Progressive strength training"),
+    estimatedMinutes: clamp(Number(workout.estimatedMinutes || workout.durationMinutes || 45), 10, 120),
+    kind: String(workout.kind || "strength"),
+    optional: Boolean(workout.optional),
+    exercises: exercises.map(v3ExerciseFromInput)
+  };
+}
+function v3NormalizeProgram(parsed) {
+  var source = parsed && parsed.program ? parsed.program : parsed;
+  if (!source || typeof source !== "object") throw new Error("No program object found.");
+  var rawWeeks = Array.isArray(source.weeks) ? source.weeks : null;
+  if (!rawWeeks && Array.isArray(source.days)) {
+    rawWeeks = Array.from({ length: 10 }, function (_, index) { return { week: index + 1, focus: "Progressive overload", workouts: v3Clone(source.days) }; });
+  }
+  if (!rawWeeks || rawWeeks.length !== 10) throw new Error("The program must contain exactly 10 weeks.");
+  var supportPlan = generatePersonalWorkoutPlan(state.profile, state.coachProgram);
+  var supportDays = supportPlan.schedule.filter(function (plan) { return plan.kind !== "strength"; });
+  var weeks = rawWeeks.map(function (week, weekIndex) {
+    var rawWorkouts = Array.isArray(week.workouts) ? week.workouts : (Array.isArray(week.days) ? week.days : []);
+    var workouts = rawWorkouts.map(function (workout, index) { return v3NormalizeWorkout(workout, weekIndex + 1, index); });
+    supportDays.forEach(function (support) {
+      if (!workouts.some(function (workout) { return Number(workout.weekday) === Number(support.weekday); })) {
+        var copy = v3Clone(support); copy.id = support.id + "-w" + (weekIndex + 1); workouts.push(copy);
+      }
+    });
+    workouts.sort(function (a, b) { return a.weekday - b.weekday; });
+    return { week: weekIndex + 1, focus: String(week.focus || "Progressive strength"), workouts: workouts };
+  });
+  return {
+    signature: planSignature(state.profile, state.coachProgram),
+    programId: PERSONAL_PROGRAM_ID,
+    programName: String(source.programName || source.name || "ChatGPT 10-Week Strength Cycle"),
+    source: "ChatGPT JSON import",
+    cycleLengthWeeks: 10,
+    generatedAt: new Date().toISOString(),
+    schedule: weeks[0].workouts,
+    weeks: weeks,
+    fallback: supportPlan.fallback,
+    requestedStartDate: source.startDate || localDateKey()
+  };
+}
+var v2SuggestedLoadFor = suggestedLoadFor;
+suggestedLoadFor = function (exercise, prescription, plan) {
+  var existing = v2SuggestedLoadFor(exercise, prescription, plan);
+  if ((existing === "" || existing === null || existing === undefined) && prescription && prescription.startingWeight !== "" && prescription.startingWeight !== undefined && prescription.startingWeight !== null) {
+    var max = maxLoadForExercise(exercise);
+    var value = Number(prescription.startingWeight);
+    return max !== null ? Math.min(max, value) : value;
+  }
+  return existing;
+};
+function v3BuildChatGPTPrompt() {
+  var allowed = EXERCISES.map(function (exercise) { return exercise.key + " = " + exercise.name; }).join("; ");
+  return "Act as my practical personal trainer. Create a new 10-week strength program for fat loss while preserving muscle and improving general fitness. I am using a separate cardio plan on Tuesday and Thursday, so generate strength workouts only for Monday, Wednesday, and Saturday. I have two adjustable dumbbells from 5 to 25 lb each, a treadmill, Peloton classes, and an ab roller. Sessions should take about 40-50 minutes. Use progressive overload, but account for the 25 lb dumbbell limit with unilateral work, tempo, pauses, reps, sets, and exercise progression. Include a lighter week when appropriate. Avoid extreme volume.\n\nReturn JSON only, with no markdown or explanation. It must use this exact top-level shape:\n{\n  \"programName\": \"name\",\n  \"cycleLengthWeeks\": 10,\n  \"startDate\": \"YYYY-MM-DD\",\n  \"weeks\": [\n    {\n      \"week\": 1,\n      \"focus\": \"week focus\",\n      \"workouts\": [\n        {\n          \"weekday\": 1,\n          \"title\": \"Full Body A\",\n          \"focus\": \"focus\",\n          \"estimatedMinutes\": 45,\n          \"kind\": \"strength\",\n          \"exercises\": [\n            {\n              \"exerciseKey\": \"goblet_squat\",\n              \"name\": \"Goblet Squat\",\n              \"sets\": 3,\n              \"targetReps\": \"10-15\",\n              \"defaultReps\": 10,\n              \"restSeconds\": 60,\n              \"startingWeight\": 20,\n              \"cue\": \"brief coaching cue\",\n              \"requires\": [\"dumbbells\"],\n              \"type\": \"compound\"\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}\n\nRequirements: include exactly 10 week objects; each week must include workouts for weekday 1, 3, and 6; use 4-7 exercises per strength workout; weights are per dumbbell and may never exceed 25; bodyweight exercises should use startingWeight 0; keep exerciseKey stable when the same movement repeats. Prefer these supported exercise keys when appropriate: " + allowed + ". You may create a clear snake_case exerciseKey for a movement not listed. Set startDate to " + localDateKey() + ".";
+}
+function showProgramImport() {
+  openModal(modalHeader("Load a 10-week program", "Paste the JSON returned by ChatGPT.") + '<div class="modal-body"><div class="notice notice-success"><strong>No AI is connected to the app.</strong> Momentum only imports the plan you choose to paste. Your workout history stays on this device.</div><div class="field" style="margin-top:14px"><label for="programJsonInput">Program JSON</label><textarea class="textarea program-json-area" id="programJsonInput" placeholder="Paste the JSON here"></textarea></div><input id="programFileInput" class="hidden" type="file" accept="application/json,.json"><div class="program-studio-actions"><button class="button button-ghost" type="button" data-action="copy-program-prompt">Copy prompt</button><button class="button button-ghost" type="button" data-action="trigger-program-file">Choose JSON file</button></div><p class="inline-note program-format-note">Loading a program replaces the future workout plan, not your completed workout, weight, body-fat, meal, or habit history. Tuesday and Thursday cardio are retained when the imported JSON only contains strength days.</p></div><div class="modal-actions"><button class="button button-ghost" type="button" data-action="close-modal">Cancel</button><button class="button" type="button" data-action="import-program-json">Load program</button></div>', { full: true, focus: false });
+}
+function v3ImportProgramText(text) {
+  try {
+    var clean = String(text || "").trim().replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/, "");
+    var parsed = JSON.parse(clean);
+    var plan = v3NormalizeProgram(parsed);
+    state.coachProgram.startDate = plan.requestedStartDate || localDateKey();
+    state.coachProgram.cycleLengthWeeks = 10;
+    delete plan.requestedStartDate;
+    state.workoutPlan = plan;
+    state.activeWorkout = null;
+    saveState({ render: false }); closeModal(); renderAll(); showToast("10-week program loaded.");
+  } catch (error) {
+    console.error(error);
+    showToast(error && error.message ? error.message : "That program JSON could not be loaded.", true);
+  }
+}
+
+var v2ExportProgressCSV = exportProgressCSV;
+exportProgressCSV = function () {
+  var headers = ["Date", "Daily Score", "Weight", "Body Fat Percent", "Water Ounces", "Protein Grams", "Workout", "Workout Type", "Session Minutes", "Cardio Minutes", "Habits Completed", "Notes"];
+  var rows = Object.keys(state.logs || {}).sort().map(function (dateKey) {
+    var log = v3EnsureLog(state.logs[dateKey]);
+    var completedHabits = Object.keys(log.habits || {}).filter(function (id) { return log.habits[id]; }).join("; ");
+    return [dateKey, getDailyScore(dateKey), log.weight || "", log.bodyFat || "", log.water || 0, getProteinTotal(dateKey), log.workout && log.workout.complete ? (log.workout.title || "Completed") : "", log.workout ? (log.workout.kind || "") : "", log.workout ? (log.workout.durationMinutes || "") : "", log.workout ? (log.workout.cardioMinutes || "") : "", completedHabits, log.notes || ""];
+  });
+  var csv = [headers].concat(rows).map(function (row) { return row.map(function (value) { return '"' + String(value).replaceAll('"', '""') + '"'; }).join(","); }).join("\r\n");
+  downloadBlob(new Blob([csv], { type: "text/csv;charset=utf-8" }), "momentum-progress-" + localDateKey() + ".csv");
+};
+
+var v2BuildReminderPayload = buildReminderPayload;
+buildReminderPayload = function (dateKey) {
+  var payload = v2BuildReminderPayload(dateKey);
+  var skipped = v3EnsureLog(getDayLog(dateKey || localDateKey())).skippedTasks;
+  payload.items = payload.items.filter(function (item) {
+    var task = getTasks(dateKey || localDateKey()).find(function (candidate) { return candidate.title === item.title.replace(/^Momentum(?: \(optional\))?: /, ""); });
+    return !task || !task.skipped;
+  });
+  return payload;
+};
+updateAppBadge = function () {
+  var incomplete = getTasks(localDateKey()).filter(function (task) { return !task.complete && !task.optional && !task.skipped; }).length;
+  try {
+    if (incomplete > 0 && navigator.setAppBadge) navigator.setAppBadge(incomplete);
+    else if (navigator.clearAppBadge) navigator.clearAppBadge();
+  } catch (error) {}
+};
+
+var v2ProfileFormHtml = profileFormHtml;
+profileFormHtml = function (profile, options) {
+  return v2ProfileFormHtml(profile, options).replace(/of 8/g, "of 10").replace(/Daily water target \(oz\)/g, "Daily water target (oz; 40 oz Owala)");
+};
+
+var v2RenderAll = renderAll;
+renderAll = function () {
+  if (state) v3EnsureState(state);
+  v2RenderAll();
+};
+
+function v3HandleClick(event) {
+  var target = event.target.closest && event.target.closest("[data-action]");
+  if (!target) return;
+  var action = target.dataset.action;
+  var handled = ["skip-task", "unskip-task", "save-body-metrics", "show-habit-settings", "add-habit-row", "remove-habit-row", "save-habits", "copy-program-prompt", "show-program-import", "import-program-json", "trigger-program-file"];
+  if (!handled.includes(action)) return;
+  event.preventDefault(); event.stopImmediatePropagation();
+  if (action === "skip-task") v3SkipTask(target.dataset.taskId);
+  else if (action === "unskip-task") v3UnskipTask(target.dataset.taskId);
+  else if (action === "save-body-metrics") v3SaveBodyMetrics();
+  else if (action === "show-habit-settings") showHabitSettings();
+  else if (action === "add-habit-row") {
+    var rows = document.getElementById("habitEditorRows");
+    if (rows) rows.insertAdjacentHTML("beforeend", v3HabitEditorRow({ id: uid("habit"), title: "New habit", category: "healthy", time: "12:00", days: [0,1,2,3,4,5,6] }));
+  }
+  else if (action === "remove-habit-row") { var row = target.closest("[data-habit-editor-row]"); if (row) row.remove(); }
+  else if (action === "save-habits") v3SaveHabits();
+  else if (action === "copy-program-prompt") {
+    copyText(v3BuildChatGPTPrompt()).then(function () { showToast("ChatGPT prompt copied."); }).catch(function () { showToast("Could not copy the prompt.", true); });
+  }
+  else if (action === "show-program-import") showProgramImport();
+  else if (action === "import-program-json") v3ImportProgramText((document.getElementById("programJsonInput") || {}).value || "");
+  else if (action === "trigger-program-file") { var input = document.getElementById("programFileInput"); if (input) input.click(); }
+}
+function v3HandleChange(event) {
+  if (event.target && event.target.id === "programFileInput") {
+    event.stopImmediatePropagation();
+    var file = event.target.files && event.target.files[0];
+    if (!file) return;
+    file.text().then(function (text) { var area = document.getElementById("programJsonInput"); if (area) area.value = text; }).catch(function () { showToast("Could not read that file.", true); });
+    event.target.value = "";
+  }
+}
+document.addEventListener("click", v3HandleClick, true);
+document.addEventListener("change", v3HandleChange, true);
 
 </script>
 </body>
